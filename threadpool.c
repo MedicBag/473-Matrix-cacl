@@ -15,8 +15,9 @@ sem_t all_tasks_completed;
 sem_t slots_available;
 
 int enqueue(Task t) {
-  if (queue_count == QUEUE_SIZE) return 1;
+  if (queue_count == QUEUE_SIZE) return 1; // queue is full
 
+  // adds task to queue
   task_list[enqueue_index] = t;
   enqueue_index += 1;
   if (enqueue_index >= QUEUE_SIZE) enqueue_index = 0;
@@ -25,6 +26,7 @@ int enqueue(Task t) {
 }
 
 Task dequeue() {
+  // returns task from quue
   Task t = task_list[dequeue_index];
   dequeue_index += 1;
   if (dequeue_index >= QUEUE_SIZE) dequeue_index = 0;
@@ -41,11 +43,14 @@ void* worker(void *args) {
     sem_wait(&sem); // Wait for work
 
     pthread_mutex_lock(&lock);
+
+    //if all tasks completed returns
     if (completed_tasks >= total_tasks) {
       pthread_mutex_unlock(&lock);
       break;
     }
 
+    // gets task from queue and completes task
     Task t = dequeue();
     sem_post(&slots_available);
     pthread_mutex_unlock(&lock);
