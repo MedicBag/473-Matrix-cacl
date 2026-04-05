@@ -112,8 +112,9 @@ int main(int argc, char *argv[]) {
   if (argc != 3) {
     return 1;
   }
-  printf("reading files\n");
+  printf("reading file 1 \n");
   FILE *fileA = fopen(argv[1], "r");
+  printf("reading file 2 \n");
   FILE *fileB = fopen(argv[2], "r");
   if (!fileA || !fileB) {
     perror("Error opening files");

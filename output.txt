@@ -1,4 +1,4 @@
-Time took: 0.000367 seconds
+Time took: 0.000155 seconds
 matrix A (3 x 3):
 1 2 3 
 3 4 5 
